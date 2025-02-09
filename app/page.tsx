@@ -17,7 +17,7 @@ export default function Home() {
     comments: "",
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: unknown) => {
     const { name, value, type, checked } = e.target;
     if (type === "checkbox") {
       setFormData({
@@ -31,10 +31,10 @@ export default function Home() {
     }
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: unknown) => {
     e.preventDefault();
     const response = await fetch(
-      "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL", // Replace this with your actual script URL
+      "https://script.google.com/macros/s/AKfycbzg92d2dUIIX1IhLtQgFCM-qjZTZc9elqamgaGUSKKuMpOFMQCe6hAh0wt4GkmKx0g/exec", // Replace this with your actual script URL
       {
         method: "POST",
         body: JSON.stringify(formData),
