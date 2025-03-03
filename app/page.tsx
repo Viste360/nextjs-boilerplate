@@ -20,14 +20,18 @@ export default function HostRegistration() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { name, value, type } = e.target;
 
     if (type === "checkbox") {
       const checkbox = e.target as HTMLInputElement;
       setFormData((prev) => ({
         ...prev,
-        features: checkbox.checked ? [...prev.features, value] : prev.features.filter((f) => f !== value),
+        features: checkbox.checked
+          ? [...prev.features, value]
+          : prev.features.filter((f) => f !== value),
       }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
@@ -37,33 +41,38 @@ export default function HostRegistration() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setMessage("");
+    setMessage("Submitting...");
 
-    const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbzg92d2dUIIX1IhLtQgFCM-qjZTZc9elqamgaGUSKKuMpOFMQCe6hAh0wt4GkmKx0g/exec",
-      {
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: { "Content-Type": "application/json" },
+    try {
+      const response = await fetch(
+        "https://script.google.com/macros/s/AKfycbzg92d2dUIIX1IhLtQgFCM-qjZTZc9elqamgaGUSKKuMpOFMQCe6hAh0wt4GkmKx0g/exec",
+        {
+          method: "POST",
+          body: JSON.stringify(formData),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      if (response.ok) {
+        setMessage("✅ Thank you! Your response has been submitted.");
+        setFormData({
+          fullName: "",
+          email: "",
+          whatsapp: "",
+          location: "",
+          properties: "",
+          channelManager: "",
+          otherCM: "",
+          features: [],
+          startDate: "",
+          demoCall: "",
+          comments: "",
+        });
+      } else {
+        throw new Error("Server responded with an error");
       }
-    );
-
-    if (response.ok) {
-      setMessage("✅ Thank you! Your response has been submitted.");
-      setFormData({
-        fullName: "",
-        email: "",
-        whatsapp: "",
-        location: "",
-        properties: "",
-        channelManager: "",
-        otherCM: "",
-        features: [],
-        startDate: "",
-        demoCall: "",
-        comments: "",
-      });
-    } else {
+    } catch (error) {
+      console.error("Error submitting form:", error);
       setMessage("❌ Something went wrong. Please try again.");
     }
 
