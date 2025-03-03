@@ -40,7 +40,7 @@ export default function HostRegistration() {
     setMessage("");
 
     const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbzg92d2dUIIX1IhLtQgFCM-qjZTZc9elqamgaGUSKKuMpOFMQCe6hAh0wt4GkmKx0g/exec", // Replace this with your Google Script URL
+      "https://script.google.com/macros/s/AKfycbzg92d2dUIIX1IhLtQgFCM-qjZTZc9elqamgaGUSKKuMpOFMQCe6hAh0wt4GkmKx0g/exec",
       {
         method: "POST",
         body: JSON.stringify(formData),
