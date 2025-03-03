@@ -23,7 +23,6 @@ export default function HostRegistration() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
 
-    // Handle checkboxes separately
     if (type === "checkbox") {
       const checkbox = e.target as HTMLInputElement;
       setFormData((prev) => ({
