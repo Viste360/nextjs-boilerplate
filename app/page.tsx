@@ -43,6 +43,13 @@ export default function HostRegistration() {
     setIsSubmitting(true);
     setMessage("Submitting...");
 
+    // Ensure required fields are filled
+    if (!formData.fullName || !formData.email || !formData.whatsapp || !formData.location) {
+      setMessage("❌ Please fill in all required fields.");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const response = await fetch(
         "https://script.google.com/macros/s/AKfycbzg92d2dUIIX1IhLtQgFCM-qjZTZc9elqamgaGUSKKuMpOFMQCe6hAh0wt4GkmKx0g/exec",
